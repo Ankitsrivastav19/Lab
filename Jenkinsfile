@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         TAG_NUMBER = 0
-        CONTAINER_NAME = "my_container"
+        CONTAINER_NAME = "application"
     }
     stages {
         stage('Build') {
@@ -25,7 +25,7 @@ pipeline {
                 sh "docker rm ${CONTAINER_NAME} || true"
                 
                 // Run the new container on port 8080
-                sh "docker run -d -p 8080:5000 --name ${CONTAINER_NAME} ankit191919/application:${TAG_NUMBER}"
+                sh "docker run -d -p 5000:5000 --name ${CONTAINER_NAME} ankit191919/application:${TAG_NUMBER}"
             }
         }
     }
