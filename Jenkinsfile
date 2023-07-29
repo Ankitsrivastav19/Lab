@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         TAG_NUMBER = 0
+        CONTAINER_NAME = "my_container"
     }
     stages {
         stage('Build') {
@@ -18,7 +19,13 @@ pipeline {
             steps {
                 echo 'Pulling and running the Docker container...'
                 sh "docker pull ankit191919/application:${TAG_NUMBER}"
-                sh "docker run -d -p 5000:5000 --name my_container ankit191919/application:${TAG_NUMBER}"
+                
+                // Stop and remove the existing container if it exists
+                sh "docker stop ${CONTAINER_NAME} || true"
+                sh "docker rm ${CONTAINER_NAME} || true"
+                
+                // Run the new container on port 8080
+                sh "docker run -d -p 8080:5000 --name ${CONTAINER_NAME} ankit191919/application:${TAG_NUMBER}"
             }
         }
     }
