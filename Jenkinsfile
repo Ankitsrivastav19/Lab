@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        TAG_NUMBER = 0
+        TAG_NUMBER = 1
         CONTAINER_NAME = "application"
     }
     stages {
